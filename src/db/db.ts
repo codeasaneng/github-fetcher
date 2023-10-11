@@ -1,4 +1,4 @@
-const pgPromise = require('pg-promise');
+import pgPromise from 'pg-promise';
 
 const pgp = (pgPromise as any)();
 const db = pgp('postgres://postgres:postgres@localhost:5432/postgres');
