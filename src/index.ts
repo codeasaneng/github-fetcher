@@ -1,5 +1,5 @@
 import { fetchGithubUser } from './services/githubAPI';
-import { insertUser, userExists } from './db/dbFunctions';
+import { insertUser, userExists, displayAllUsers, listUsersFromLocation } from './db/dbFunctions';
 
 const main = async () => {
   const args = process.argv.slice(2);
@@ -15,6 +15,15 @@ const main = async () => {
       } else {
         console.log(`User with GitHub ID ${user.id} already exists in the database and will not be added.`);
       }
+      break;
+    case 'display':
+      const users = await displayAllUsers();
+      console.log('All Users:', users);
+      break;
+    case 'list-from-location':
+      const location = args[1];
+      const usersFromLocation = await listUsersFromLocation(location);
+      console.log(`Users from ${location}:`, usersFromLocation);
       break;
   }
 };

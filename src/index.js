@@ -25,6 +25,15 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 console.log(`User with GitHub ID ${user.id} already exists in the database and will not be added.`);
             }
             break;
+        case 'display':
+            const users = yield (0, dbFunctions_1.displayAllUsers)();
+            console.log('All Users:', users);
+            break;
+        case 'list-from-location':
+            const location = args[1];
+            const usersFromLocation = yield (0, dbFunctions_1.listUsersFromLocation)(location);
+            console.log(`Users from ${location}:`, usersFromLocation);
+            break;
     }
 });
 main().catch(console.error);

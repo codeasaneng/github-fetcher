@@ -8,3 +8,11 @@ export const userExists = async (github_id: number): Promise<boolean> => {
   const user = await db.oneOrNone('SELECT * FROM users WHERE github_id = $1', [github_id]);
   return !!user;
 };
+
+export const displayAllUsers = async () => {
+  return db.manyOrNone('SELECT * FROM users');
+};
+
+export const listUsersFromLocation = async (location: string) => {
+  return db.manyOrNone('SELECT * FROM users WHERE location = $1', [location]);
+};

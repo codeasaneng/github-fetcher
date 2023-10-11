@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userExists = exports.insertUser = void 0;
+exports.listUsersFromLocation = exports.displayAllUsers = exports.userExists = exports.insertUser = void 0;
 const db_1 = __importDefault(require("./db"));
 const insertUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     return db_1.default.oneOrNone('INSERT INTO users(github_id, user_name, name, location) VALUES($1, $2, $3, $4) RETURNING id', [user.id, user.login, user.name, user.location]);
@@ -23,3 +23,11 @@ const userExists = (github_id) => __awaiter(void 0, void 0, void 0, function* ()
     return !!user;
 });
 exports.userExists = userExists;
+const displayAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    return db_1.default.manyOrNone('SELECT * FROM users');
+});
+exports.displayAllUsers = displayAllUsers;
+const listUsersFromLocation = (location) => __awaiter(void 0, void 0, void 0, function* () {
+    return db_1.default.manyOrNone('SELECT * FROM users WHERE location = $1', [location]);
+});
+exports.listUsersFromLocation = listUsersFromLocation;
