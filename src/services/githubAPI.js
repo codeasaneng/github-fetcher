@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchGithubUser = void 0;
+exports.fetchUserLanguages = exports.fetchGithubUser = void 0;
 const axios_1 = __importDefault(require("axios"));
 const ramda_1 = require("ramda");
+// Fetch a github user by user name (login)
 const fetchGithubUser = (username) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield axios_1.default.get(`https://api.github.com/users/${username}`);
     return {
@@ -25,3 +26,10 @@ const fetchGithubUser = (username) => __awaiter(void 0, void 0, void 0, function
     };
 });
 exports.fetchGithubUser = fetchGithubUser;
+// Fetch an user languages
+const fetchUserLanguages = (username) => __awaiter(void 0, void 0, void 0, function* () {
+    const repos = yield axios_1.default.get(`https://api.github.com/users/${username}/repos`);
+    const languages = repos.data.map((repo) => repo.language);
+    return Array.from(new Set(languages));
+});
+exports.fetchUserLanguages = fetchUserLanguages;
