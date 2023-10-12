@@ -1,8 +1,7 @@
 import { GithubUser, DbUser, fetchGithubUser, fetchUserLanguages } from './services/githubAPI';
 import { insertUser, userExists, displayAllUsers, getUsersByLocationAndLanguage, insertLanguage, linkUserToLanguage} from './db/dbFunctions';
-import { forEach } from 'ramda';
 
-const main = async () => {
+export const main = async () => {
   // Retrieve command-line arguments
   const args = process.argv.slice(2);
   

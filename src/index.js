@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.main = void 0;
 const githubAPI_1 = require("./services/githubAPI");
 const dbFunctions_1 = require("./db/dbFunctions");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -73,6 +74,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             break;
     }
 });
+exports.main = main;
 // Helper function to format and display user details
 const displayUserFormat = (user) => {
     const id = user.id;
@@ -88,4 +90,4 @@ const displayUserFormat = (user) => {
     Location: ${location}
   `);
 };
-main().catch(console.error);
+(0, exports.main)().catch(console.error);
