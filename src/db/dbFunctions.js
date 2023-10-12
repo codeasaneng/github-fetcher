@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsersByLocationAndLanguage = exports.linkUserToLanguage = exports.insertLanguage = exports.displayAllUsers = exports.userExists = exports.insertUser = void 0;
+exports.getUsersByLocationAndLanguage = exports.linkUserToLanguage = exports.insertLanguage = exports.displayAllUsers = exports.userExists = exports.deleteUserByGithubId = exports.insertUser = void 0;
 const db_1 = __importDefault(require("./db"));
 // Inserts a GitHub user into the database and returns the ID of the inserted user.
 const insertUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
@@ -20,6 +20,14 @@ const insertUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     return result.id; // Return the ID of the newly inserted user
 });
 exports.insertUser = insertUser;
+// Deletes a user by their GitHub ID from the database
+const deleteUserByGithubId = (github_id) => __awaiter(void 0, void 0, void 0, function* () {
+    // First, delete any associated records in the user_languages table
+    yield db_1.default.none('DELETE FROM user_languages WHERE user_id = (SELECT id FROM users WHERE github_id = $1)', [github_id]);
+    // Now, delete the user from the users table
+    yield db_1.default.none('DELETE FROM users WHERE github_id = $1', [github_id]);
+});
+exports.deleteUserByGithubId = deleteUserByGithubId;
 // Checks if a user with the given GitHub ID already exists in the database.
 const userExists = (github_id) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield db_1.default.oneOrNone('SELECT * FROM users WHERE github_id = $1', [github_id]);

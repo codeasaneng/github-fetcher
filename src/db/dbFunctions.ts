@@ -7,6 +7,15 @@ export const insertUser = async (user: GithubUser): Promise<number> => {
   return result.id;  // Return the ID of the newly inserted user
 };
 
+// Deletes a user by their GitHub ID from the database
+export const deleteUserByGithubId = async (github_id: number): Promise<void> => {
+  // First, delete any associated records in the user_languages table
+  await db.none('DELETE FROM user_languages WHERE user_id = (SELECT id FROM users WHERE github_id = $1)', [github_id]);
+
+  // Now, delete the user from the users table
+  await db.none('DELETE FROM users WHERE github_id = $1', [github_id]);
+};
+
 // Checks if a user with the given GitHub ID already exists in the database.
 export const userExists = async (github_id: number): Promise<boolean> => {
   const user = await db.oneOrNone('SELECT * FROM users WHERE github_id = $1', [github_id]);

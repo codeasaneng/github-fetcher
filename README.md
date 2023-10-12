@@ -117,3 +117,25 @@ Run the next commands inside the src folder where is located the index.js file
     This lists users based on the provided location and/or programming language.
 
     Remember to replace `[username]`, `[location]`, and `[language]` with appropriate values when running the commands.
+
+## Run tests
+
+### 1. Unit (jest) tests:
+
+On the root of the project run:
+
+    npm run unit-tests
+
+Results will be displayed like:
+
+    Test Suites: 3 passed, 3 total
+    Tests:       12 passed, 12 total
+    Snapshots:   0 total
+    Time:        3.26 s
+    Ran all test suites.
+
+### 2. E2E test:
+
+On the root of the project run:
+
+    npm test
